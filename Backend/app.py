@@ -10,7 +10,7 @@ app = Flask (__name__)
 basedir=os.path.abspath(os.path.dirname(__file__))
 #Light configuration for sqlite3, Sqlite3 is a testing database, perfect for getting up and off the ground
 #'bookstore.sqlite' is my database name, can call it whatever you want
-app.config['SQL_DATABASE_URL']='sqlite:///' + os.path.join(basedir, 'bookstore.sqlite')
+app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///' + os.path.join(basedir, 'bookstore.sqlite')
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 CORS(app)
