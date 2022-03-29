@@ -27,7 +27,7 @@ class Book(db.Model):
     genre = db.Column(db.String(50), nullable=False)
 
     #python class constructor, will always take anything that is nullable=False, nullable=True you don't have to put in here unless you want to 
-    def __int__(self, title, author, price, genre):
+    def __init__(self, title, author, price, genre):
         self.title = title
         self.author = author
         self.price = price
@@ -50,31 +50,31 @@ def homepage():
     #returning what you want shown in the app.route '/'
     return 'homepage'
 
-    @app.route('/books', methods=["GET"])
-    def get_all_books():
-      books = db.session.query(Book).all()
-      #Dump essentially dumps all the data for you to use
-      return jsonify(books_schema.dump(books))
+@app.route('/books', methods=["GET"])
+def get_all_books():
+    books = db.session.query(Book).all()
+    #Dump essentially dumps all the data for you to use
+    return jsonify(books_schema.dump(books))
 
 
       #Create
-      @app.route('/book', methods=["POST"])
-      def create_book():
-        book_data = request.get_json()
-        title = book_data.get("title")
-        author = book_data.get("author")
-        price = book_data.get("price")
-        gener = book_data.get("gener")
+@app.route('/book', methods=["POST"])
+def create_book():
+    book_data = request.get_json()
+    title = book_data.get("title")
+    author = book_data.get("author")
+    price = book_data.get("price")
+    genre = book_data.get("genre")
 
-        new_book = Book(title, author, price, genre)
-        db.session.add(new_book)
-        db.session.commit()
-        return jsonify(new_book)
+    new_book = Book(title, author, price, genre)
+    db.session.add(new_book)
+    db.session.commit()
+    return jsonify("new book")
 
 #Delete
-@app.route('/book<id>', methods=["DELETE"])
+@app.route('/book/<id>', methods=["DELETE"])
 def delete_book(id):
-    book_to_delete = db.session.query(Book).filter(Book_id == id).first()
+    book_to_delete = db.session.query(Book).filter(Book.id == id).first()
     db.session.delete(book_to_delete)
     db.session.commit()
     return jsonify("Book has been deleted")
