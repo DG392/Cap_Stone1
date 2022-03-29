@@ -20,6 +20,10 @@ function BookItem(props) {
           <p>{genre}</p>
           <p>{price}</p>
        </div>
+
+       <div>
+          <button onClick={() => props.handleDeleteBook(id)}>Remove</button>
+       </div>
     </div>
   )
 }
