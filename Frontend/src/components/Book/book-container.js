@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import BookItem from './book-item';
+import BookForm from './forms/book-form';
 
 class BookContainer extends Component {
   constructor() {
@@ -11,6 +12,14 @@ class BookContainer extends Component {
     }
     this.renderBooks = this.renderBooks.bind(this)
     this.deleteBook = this.deleteBook.bind(this)
+    this.handleBookSubmission = this.handleBookSubmission.bind(this)
+  }
+
+  handleBookSubmission(book){
+    this.setState({
+        books: [book].concat(this.state.books)
+    })
+    console.log(book)
   }
 
   deleteBook(id){
@@ -38,6 +47,16 @@ class BookContainer extends Component {
       })
   }
 
+  updateBook(id) {
+    axios.put(`http://localhost:5000/book/${id}`)
+    .then(response => {
+      console.log(response.data);
+      this.setState({
+        books:response.data
+      })
+    })
+  }
+
   renderBooks() {
     return this.state.books.map(book =>{
         return<BookItem key={book.id} book={book} handleDeleteBook={this.deleteBook}/>
@@ -51,6 +70,9 @@ class BookContainer extends Component {
   render() {
     return (
        <div>
+          <div>
+             <BookForm handleBookSubmission={this.handleBookSubmission} />
+          </div>
            {this.renderBooks()}
        </div>
     )

@@ -1,3 +1,60 @@
-.book {
-    border: 1px solid grey;
+.app {
+    background-image: url("../../static/assets/bookstore2.jpg");
+    background-attachment: fixed;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+
+
+
+
+    .book {
+        border: 1px solid grey;
+        font-weight: 800;
+        font-family: "Bebas Neue", "san-serif";
+        margin-bottom: 0%;
+        color:crimson;
+        font-size: 30px;
+        text-decoration:underline;
+        font-style:oblique;
+        display: grid;
+
+    
+        .edit-book {
+          .delete-icon {
+            cursor: pointer;
+            color:black;
+            font-size: 1.5em; 
+            transition: 0.5s ease-in-out;
+    
+            &:hover {
+              color:darkgreen;
+            }
+          }
+        }
+
+        .update-book {
+          .update-icon {
+            cursor: pointer;
+            color:darkblue;
+            font-size: 1.5em;
+            transition: 0.5s;
+
+            &:hover {
+                color:red;
+            }
+          }
+        }
+    
+    
+    }
+
 }
+
+
+
+
+
+
+
+

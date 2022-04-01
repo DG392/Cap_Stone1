@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import os
 
 app = Flask (__name__)
@@ -13,7 +13,8 @@ basedir=os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///' + os.path.join(basedir, 'bookstore.sqlite')
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
-CORS(app)
+CORS(app, resources={r'/*': {'origins': '*'}})
+
 
 #Book Class
 class Book(db.Model):
@@ -59,6 +60,7 @@ def get_all_books():
 
       #Create
 @app.route('/book', methods=["POST"])
+@cross_origin()
 def create_book():
     book_data = request.get_json()
     title = book_data.get("title")
@@ -69,7 +71,28 @@ def create_book():
     new_book = Book(title, author, price, genre)
     db.session.add(new_book)
     db.session.commit()
-    return jsonify("new book")
+    return book_schema.jsonify(new_book)
+
+@app.route('/book/<id>', methods=["PUT"])
+def update_books(id):
+    book = db.session.query(Book).filter(Book.id == id).first()
+    book_data = request.get_json()
+    title = book_data.get("title")
+    author = book_data.get("author")
+    price = book_data.get("price")
+    genre = book_data.get("genre")
+
+    if title != None:
+        book.title = title
+    if author != None:
+        book.author = author
+    if price != None:
+        book.price = price
+    if genre != None:
+        book.genre = genre
+
+    db.session.commit()
+    return jsonify("Updated Book!")
 
 #Delete
 @app.route('/book/<id>', methods=["DELETE"])
