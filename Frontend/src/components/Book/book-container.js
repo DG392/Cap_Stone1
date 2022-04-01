@@ -23,7 +23,7 @@ class BookContainer extends Component {
   }
 
   deleteBook(id){
-    axios.delete(`http://localhost:5000/book/${id}`)
+    axios.delete(`https://dg-backend-bookstore.herokuapp.com/book/${id}`)
     .then(response => {
         this.setState({
             books: this.state.books.filter(book => {
@@ -35,7 +35,7 @@ class BookContainer extends Component {
   }
 
   booksAPICall() {
-      axios.get('http://localhost:5000/books')
+      axios.get('https://dg-backend-bookstore.herokuapp.com/books')
       .then(response => {
           console.log(response.data);
           this.setState({
@@ -48,7 +48,7 @@ class BookContainer extends Component {
   }
 
   updateBook(id) {
-    axios.put(`http://localhost:5000/book/${id}`)
+    axios.put(` https://dg-backend-bookstore.herokuapp.com/book/${id}`)
     .then(response => {
       console.log(response.data);
       this.setState({
