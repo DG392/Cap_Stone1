@@ -15,6 +15,7 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 CORS(app, resources={r'/*': {'origins': '*'}})
 
+#todo
 
 #Book Class
 class Book(db.Model):
